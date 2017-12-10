@@ -176,7 +176,7 @@ if s:Python2Syntax()
   syn keyword pythonImport      as
   syn match   pythonFunction    "[a-zA-Z_][a-zA-Z0-9_]*" display contained
 else
-  syn keyword pythonStatement   as nonlocal None
+  syn keyword pythonStatement   as nonlocal
   syn match   pythonStatement   "\<yield\s\+from\>" display
   syn keyword pythonBoolean     True False
   syn match   pythonFunction    "\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*" display contained
@@ -185,6 +185,10 @@ else
   syn match   pythonStatement   "\<async\s\+with\>" display
   syn match   pythonStatement   "\<async\s\+for\>" display
 endif
+
+" self, None highlight
+syn keyword pythonSelf self cls
+syn keyword pythonNone None
 
 "
 " Decorators (new in Python 2.4)
@@ -399,7 +403,6 @@ syn match   pythonFloat		"\<\d\+\.\d*\%([eE][+-]\=\d\+\)\=[jJ]\=" display
 
 if s:Enabled("g:python_highlight_builtin_objs")
   if s:Python2Syntax()
-    syn keyword pythonBuiltinObj	None
     syn keyword pythonBoolean		True False
   endif
   syn keyword pythonBuiltinObj	Ellipsis NotImplemented
@@ -561,6 +564,8 @@ if version >= 508 || !exists("did_python_syn_inits")
   HiLink pythonBuiltinFunc      Function
 
   HiLink pythonExClass          Structure
+  HiLink pythonSelf		Identifier
+  HiLink pythonNone		Boolean
 
   delcommand HiLink
 endif
